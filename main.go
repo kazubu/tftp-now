@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
+	"strings"
 	"time"
 
 	"github.com/pin/tftp/v3"
@@ -44,6 +46,10 @@ func main() {
 
 func main_() int {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout}).Level(zerolog.InfoLevel)
+
+	if strings.Contains(os.Args[0], "serve") {
+		os.Args = slices.Insert(os.Args, 1, "serve")
+	}
 
 	if len(os.Args) < 2 {
 		fmt.Print(usage)
